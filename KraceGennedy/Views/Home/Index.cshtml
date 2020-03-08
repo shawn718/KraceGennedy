@@ -22,16 +22,48 @@
             <tbody>
                 @{
                     int count = 1;
-                    if (Model != null)
+                    int displayNum = 1;
+                    DateTime previous = new DateTime();
+                    DateTime current = new DateTime();
+                    if (Model.city != null && Model.list != null)
                     {
                         foreach (var item in Model.list)
                         {
-                            <tr>
-                                <th scope="row">@count</th>
-                                <td>@item.dt_txt</td>
-                                <td>@item.weather[0].main: @item.weather[0].description</td>
-                                <td>@Model.city.name</td>
-                            </tr>
+                            if (count <= Model.list.Count)
+                            {
+                                if (count == 1)
+                                {
+                                    previous = Convert.ToDateTime(item.dt_txt);
+                                    current = Convert.ToDateTime(item.dt_txt);
+                                    if (current.Hour == 6)
+                                    {
+                                        <tr>
+                                            <th scope="row">@displayNum</th>
+                                            <td>@item.dt_txt</td>
+                                            <td>@item.weather[0].main: @item.weather[0].description</td>
+                                            <td>@Model.city.name</td>
+                                        </tr>
+                                        displayNum = displayNum + 1;
+                                    }
+                                }
+                                else
+                                {
+                                    current = Convert.ToDateTime(item.dt_txt);
+                                    if (current.Hour == 6 )
+                                    {
+                                        <tr>
+                                            <th scope="row">@displayNum</th>
+                                            <td>@item.dt_txt</td>
+                                            <td>@item.weather[0].main: @item.weather[0].description</td>
+                                            <td>@Model.city.name</td>
+                                        </tr>
+                                        displayNum = displayNum + 1;
+                                    }
+
+                                    previous = current;
+
+                                }
+                            }
 
                             count = count + 1;
                         }
@@ -42,7 +74,7 @@
         </table>
       }
       else { 
-           <p>Welcome. Please sign in to view weather data</p>         
+           <p>Please sign in to view weather data</p>         
       }
    
 </div>

@@ -15,10 +15,25 @@ namespace KraceGennedy.Data
         {
             _context = context;
         }
+
         public void StoreWeatherData(WeatherInfo weatherInfo)
         {
             _context.WeatherInfos.Add(weatherInfo);
             _context.SaveChanges();
+        }
+
+        public List<WeatherInfo> GetWeatherData()
+        {
+            var res = _context.WeatherInfos.ToList();
+
+            return res;
+        }
+
+        public List<WeatherInfo> GetWeatherDataByCityID(int cityID)
+        {
+            var res = _context.WeatherInfos.Where(x => x.CityID == cityID).ToList();
+
+            return res;
         }
     }
 }

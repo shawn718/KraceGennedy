@@ -7,7 +7,6 @@ namespace KraceGennedy.Models
 {
     public class WeatherApiResponse
     {
-        public string name { get; set; }
         public int id { get; set; }
         public int cod { get; set; }
         public int timezone { get; set; }

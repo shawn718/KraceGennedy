@@ -22,11 +22,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                         @if (signInManager.IsSignedIn(User))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Update Records</a>
+                            </li>
                             <li class="nav-item">
                                 <form method="post" asp-action="logout" asp-controller="account">
                                     <button type="submit" class="nav-link btn btn-link py-0"
@@ -44,6 +44,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                             </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Detail">Employee Detail</a>
+                            </li>*@
                         }
 
                     </ul>

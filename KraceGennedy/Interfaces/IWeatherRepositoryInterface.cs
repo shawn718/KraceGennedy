@@ -9,5 +9,8 @@ namespace KraceGennedy.Interfaces
     public interface IWeatherRepositoryInterface
     {
         public void StoreWeatherData(WeatherInfo weatherInfo);
+        
+        public List<WeatherInfo> GetWeatherData();
+        public List<WeatherInfo> GetWeatherDataByCityID(int cityID);
     }
 }

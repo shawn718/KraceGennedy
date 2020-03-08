@@ -202,6 +202,7 @@ namespace KraceGennedy.Controllers
 
                 if (result.Succeeded)
                 {
+                    HttpContext.Session.SetString(ApplicationVariables.SessionVariables.UserEmail, JsonConvert.SerializeObject(lvm.Email));
                     return RedirectToAction("index", "home");
                 }
 

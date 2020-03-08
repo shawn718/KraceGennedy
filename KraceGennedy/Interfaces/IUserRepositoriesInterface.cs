@@ -11,5 +11,6 @@ namespace KraceGennedy.Interfaces
         public List<EmployeeCity> GetCities();
         public List<Position> GetPositions();
         public void CreateEmployee(Employee emp);
+        public Employee GetEmployeeByEmail(string email);
     }
 }

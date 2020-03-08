@@ -31,6 +31,7 @@ namespace KraceGennedy.Static
         public static class SessionVariables
         {
             public const string Roles = "Roles";
+            public const string UserEmail = "UserEmail";
 
         }
     }

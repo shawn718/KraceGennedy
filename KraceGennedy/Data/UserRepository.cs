@@ -36,5 +36,14 @@ namespace KraceGennedy.Data
             _context.SaveChanges();
         }
 
+        public Employee GetEmployeeByEmail(string email)
+        {
+            var res = _context.Employee
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
+
+            return res;
+        }
+
     }
 }
