@@ -35,5 +35,12 @@ namespace KraceGennedy.Data
 
             return res;
         }
+
+        public WeatherInfo GetWeatherDataByCityIDAndDate(int cityID, DateTime startDate)
+        {
+            return _context.WeatherInfos
+                           .Where(x => x.Day >= startDate && x.CityID == cityID)
+                           .FirstOrDefault();
+        }
     }
 }

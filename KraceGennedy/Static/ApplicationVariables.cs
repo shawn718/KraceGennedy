@@ -26,12 +26,15 @@ namespace KraceGennedy.Static
             /// TODO The Employee.
             /// </summary>
             public const string Employee = "Employee";
+            
+            public const string CEO = "CEO";
         }
 
         public static class SessionVariables
         {
             public const string Roles = "Roles";
             public const string UserEmail = "UserEmail";
+            public const string AddUserSuccess = "AddUserSuccess";
 
         }
     }

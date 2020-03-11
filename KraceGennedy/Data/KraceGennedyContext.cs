@@ -20,6 +20,7 @@ namespace KraceGennedy.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<WeatherInfo> WeatherInfos { get; set; }
+        public DbSet<EmailTracker> EmailTrackers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -12,5 +12,6 @@ namespace KraceGennedy.Interfaces
         
         public List<WeatherInfo> GetWeatherData();
         public List<WeatherInfo> GetWeatherDataByCityID(int cityID);
+        public WeatherInfo GetWeatherDataByCityIDAndDate(int cityID, DateTime startDate);
     }
 }

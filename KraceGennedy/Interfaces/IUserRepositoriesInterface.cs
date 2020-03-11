@@ -12,5 +12,9 @@ namespace KraceGennedy.Interfaces
         public List<Position> GetPositions();
         public void CreateEmployee(Employee emp);
         public Employee GetEmployeeByEmail(string email);
+        public List<Employee> GetEmployees();
+        public Schedule GetEmpScheduleByID(string empId, DateTime period);
+        public void CreateEmployeeSchedule(Schedule schedule);
+        public bool checkEmailSent(int scheduleId);
     }
 }

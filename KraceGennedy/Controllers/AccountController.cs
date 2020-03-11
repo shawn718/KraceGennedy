@@ -38,7 +38,6 @@ namespace KraceGennedy.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Register()
         {
             RegisterViewModel rvm = new RegisterViewModel();
@@ -50,12 +49,15 @@ namespace KraceGennedy.Controllers
                 Role role1 = new Role();
                 Role role2 = new Role();
                 Role role3 = new Role();
+                Role role4 = new Role();
                 role1.Name = ApplicationVariables.Roles.Employee;
                 roleList.Add(role1);
                 role2.Name = ApplicationVariables.Roles.Manager;
                 roleList.Add(role2);
                 role3.Name = ApplicationVariables.Roles.ITAdmin;
                 roleList.Add(role3);
+                role4.Name = ApplicationVariables.Roles.CEO;
+                roleList.Add(role4);
                 //Create Roles If Not Exist
                 foreach(var roleItem in roleList)
                 {
@@ -82,7 +84,13 @@ namespace KraceGennedy.Controllers
                 }
                 //Set roles session
                 HttpContext.Session.SetString(ApplicationVariables.SessionVariables.Roles, JsonConvert.SerializeObject(rvm.Role));
-                
+
+                var userCeatedSuccess = HttpContext.Session.GetString(ApplicationVariables.SessionVariables.AddUserSuccess);
+                if(userCeatedSuccess != null)
+                {
+                    ViewBag.AddUserSuccess = userCeatedSuccess;
+                    HttpContext.Session.SetString(ApplicationVariables.SessionVariables.AddUserSuccess, "none");
+                }
                 return View(rvm);
             }
             catch (Exception ex)
@@ -94,7 +102,6 @@ namespace KraceGennedy.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
@@ -114,17 +121,17 @@ namespace KraceGennedy.Controllers
                         if (result.Succeeded)
                         {
                             //Sign in user
-                            await signInManager.SignInAsync(user, isPersistent: false);
+                            //await signInManager.SignInAsync(user, isPersistent: false);
                             
                             
                             //Check if user is already in a role
                             var adminCheck = userManager.IsInRoleAsync(user, ApplicationVariables.Roles.ITAdmin).Result;
                             var managerCheck = userManager.IsInRoleAsync(user, ApplicationVariables.Roles.Manager).Result;
                             var employeeCheck = userManager.IsInRoleAsync(user, ApplicationVariables.Roles.Employee).Result;
-
+                            var ceoCheck = userManager.IsInRoleAsync(user, ApplicationVariables.Roles.CEO).Result;
                             
 
-                            if (!adminCheck && !managerCheck && !employeeCheck)
+                            if (!adminCheck && !managerCheck && !employeeCheck && !ceoCheck)
                             {
                                 //Add user to role selected if not already in role
                                 await userManager.AddToRoleAsync(user, selectedUserRole.Name);
@@ -148,19 +155,25 @@ namespace KraceGennedy.Controllers
 
                             //Add user to database
                             _userRepositoriesInterface.CreateEmployee(emp);
-
-                            return RedirectToAction("login", "account");
+                            //update user success session
+                            HttpContext.Session.SetString(ApplicationVariables.SessionVariables.AddUserSuccess, "true");
+                            
+                            return RedirectToAction("register", "account");
                         }
 
                         foreach (var error in result.Errors)
                         {
                             ModelState.AddModelError("Password", error.Description);
+                            //update user success session
+                            HttpContext.Session.SetString(ApplicationVariables.SessionVariables.AddUserSuccess, "false");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError("Error: " + ex.Message);
+                    //update user success session
+                    HttpContext.Session.SetString(ApplicationVariables.SessionVariables.AddUserSuccess, "false");
                 }
                 
                 
@@ -169,16 +182,7 @@ namespace KraceGennedy.Controllers
             rvm.city = _userRepositoriesInterface.GetCities();
             rvm.position = _userRepositoriesInterface.GetPositions();
             rvm.Role = new List<Role>();
-
-            foreach (var role in roleManager.Roles)
-            {
-                Role roleItem = new Role();
-                roleItem.Id = role.Id;
-                roleItem.Name = role.Name;
-                rvm.Role.Add(roleItem);
-            }
-            //Set roles session
-            HttpContext.Session.SetString(ApplicationVariables.SessionVariables.Roles, JsonConvert.SerializeObject(rvm.Role));
+            rvm.Role = JsonConvert.DeserializeObject<List<Role>>(HttpContext.Session.GetString(ApplicationVariables.SessionVariables.Roles));
             return View(rvm);
         }
 

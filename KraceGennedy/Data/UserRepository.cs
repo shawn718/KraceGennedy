@@ -45,5 +45,43 @@ namespace KraceGennedy.Data
             return res;
         }
 
+        public List<Employee> GetEmployees()
+        {
+            return _context.Employee.ToList();
+        }
+
+        public Schedule GetEmpScheduleByID(string empId, DateTime period)
+        {
+            //fetch schedule
+            var res = _context.Schedules.Where(x => x.EmployeeID == empId).FirstOrDefault();
+            Schedule schedule = new Schedule();
+            //checked if null
+            if (res != null)
+            {
+                schedule = res;
+            }
+
+            return schedule;
+        }
+
+        public void CreateEmployeeSchedule(Schedule schedule)
+        {
+            _context.Schedules.Add(schedule);
+            _context.SaveChanges();
+        }
+
+        public bool checkEmailSent(int scheduleId)
+        {
+            var res = _context.EmailTrackers
+                .Where(x => x.ScheduleId == scheduleId)
+                .FirstOrDefault();
+
+            if(res.Schedule.Hours != null && res.Schedule.Hours != "")
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

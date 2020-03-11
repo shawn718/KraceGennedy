@@ -4,14 +4,16 @@ using KraceGennedy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KraceGennedy.Migrations
 {
     [DbContext(typeof(KraceGennedyContext))]
-    partial class KraceGennedyContextModelSnapshot : ModelSnapshot
+    [Migration("20200310041136_addemailtracker")]
+    partial class addemailtracker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
