@@ -31,9 +31,10 @@ namespace KraceGennedy.Data
 
         public List<WeatherInfo> GetWeatherDataByCityID(int cityID)
         {
-            var res = _context.WeatherInfos.Where(x => x.CityID == cityID).ToList();
+            List<WeatherInfo> weatherInfos = new List<WeatherInfo>();
+            weatherInfos = _context.WeatherInfos.Where(x => x.CityID == cityID).ToList();
 
-            return res;
+            return weatherInfos;
         }
 
         public WeatherInfo GetWeatherDataByCityIDAndDate(int cityID, DateTime startDate)

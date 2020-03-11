@@ -23,7 +23,7 @@ namespace KraceGennedy.Controllers
             this._weatherRepositoryInterface = weatherRepositoryInterface;
         }
         // GET: api/<controller>
-        [HttpGet]
+        [HttpPost]
         [Route("schedule")]
         [AllowAnonymous]
         public IEnumerable<string> GenerateSchedule()
