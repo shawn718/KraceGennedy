@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model WeatherApiResponse;
+@inject SignInManager<IdentityUser> signInManager;
+
+<div class="text-center" >
+    <h1 class="display-4">Welcome</h1>
+    @*<p>Todays sky outlook is : @Model.main</p>
+        <p>Todays Weather is : @Model.description</p>*@
+    @if (signInManager.IsSignedIn(User))
+    {
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Weather</th>
+                    <th scope="col">City</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 1;
+                    int displayNum = 1;
+                    DateTime previous = new DateTime();
+                    DateTime current = new DateTime();
+                    if (Model.city != null && Model.list != null)
+                    {
+                        foreach (var item in Model.list)
+                        {
+                            if (count <= Model.list.Count)
+                            {
+                                if (count == 1)
+                                {
+                                    previous = Convert.ToDateTime(item.dt_txt);
+                                    current = Convert.ToDateTime(item.dt_txt);
+                                    if (current.Hour == 6)
+                                    {
+                                        <tr>
+                                            <th scope="row">@displayNum</th>
+                                            <td>@item.dt_txt</td>
+                                            <td>@item.weather[0].main: @item.weather[0].description</td>
+                                            <td>@Model.city.name</td>
+                                        </tr>
+                                        displayNum = displayNum + 1;
+                                    }
+                                }
+                                else
+                                {
+                                    current = Convert.ToDateTime(item.dt_txt);
+                                    if (current.Hour == 6 )
+                                    {
+                                        <tr>
+                                            <th scope="row">@displayNum</th>
+                                            <td>@item.dt_txt</td>
+                                            <td>@item.weather[0].main: @item.weather[0].description</td>
+                                            <td>@Model.city.name</td>
+                                        </tr>
+                                        displayNum = displayNum + 1;
+                                    }
+
+                                    previous = current;
+
+                                }
+                            }
+
+                            count = count + 1;
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+      }
+      else { 
+           <p>Please sign in to view weather data</p>         
+      }
+   
+</div>
+
+<script>
+    function schedulingandemails() {
+        var initiator = 0;
+        if (document.readyState === 'complete') {
+            // The page is fully loaded
+           // while (initiator == 0) {
+                //var d = new Date();
+                //if (d.getHours >= 22) {
+                //    $.ajax({
+                //        type: "post",
+                //        url: "/api/notification/schedule",
+                //        success: function (response) {
+                //            console.log("success");
+
+                //        },
+                //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //            console.log(errorThrown);
+
+                //        },
+                //        datatype: "application/json"
+                //    });
+                //}
+
+            //}
+        } else {
+            schedulingandemails()
+        }
+    }
+</script>
