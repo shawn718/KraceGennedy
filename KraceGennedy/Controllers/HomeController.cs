@@ -17,6 +17,7 @@ namespace KraceGennedy.Controllers
 {
     public class HomeController : Controller
     {
+        //Declare variables for interfaces, logger, dbcontext and repositories
         private readonly ILogger<HomeController> _logger;
         private readonly IWeatherInterface _weatherInterface;
         private readonly IWeatherRepositoryInterface _weatherRepositoryInterface;
@@ -25,6 +26,7 @@ namespace KraceGennedy.Controllers
 
         public SignInManager<IdentityUser> _signInManager { get; }
 
+        //initialise variables
         public HomeController(ILogger<HomeController> logger, IWeatherInterface weatherInterface
             , IWeatherRepositoryInterface weatherRepositoryInterface, IUserRepositoriesInterface UserRepositoriesInterface
             , SignInManager<IdentityUser> signInManager)
@@ -39,9 +41,11 @@ namespace KraceGennedy.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            //declare instance of the necessary models
             var resApi = new WeatherApiResponse();
             var displayResApi = new WeatherApiResponse();
             try {
+                //checks if user is signed in
                 if (_signInManager.IsSignedIn(User))
                 {
                     List<string> listOfCities = new List<string>();
@@ -62,12 +66,13 @@ namespace KraceGennedy.Controllers
                     //checks if city list is empty
                     if(listOfCities != null && listOfEmployees.Count > 0)
                     {
+                        //basically keeops track of wich city info was already fetched so it only fetches once
                         List<string> cityDataFetched = new List<string>();
                         //populate list of weatherdata responses per city
                         foreach(var city in listOfCities)
                         {
 
-                            //Fetch data from api
+                            //Fetch data from api if not already fetched
                             if (!cityDataFetched.Contains(city))
                             {
                                 resApi = await _weatherInterface.GetWeatherAsync(city);
@@ -78,9 +83,6 @@ namespace KraceGennedy.Controllers
                                 }
 
                             }
-                            
-                            
-                            
                            
                         }
                     }
@@ -88,9 +90,10 @@ namespace KraceGennedy.Controllers
                     //checks if weatherlist is empty
                     if(weatherApiResponsesList != null && weatherApiResponsesList.Count > 0)
                     {
-                        
+                        //loops through weather list
                         foreach(var weather in weatherApiResponsesList)
                         {
+                            //obtain city id from list of cities
                             var cityID = cities.Where(x => x.CityName.Trim() == weather.city.name.Trim())
                                 .FirstOrDefault().ID;
                             
@@ -99,10 +102,12 @@ namespace KraceGennedy.Controllers
                             {
                                 if(emp.CityID == cityID)
                                 {
+                                    //data to be sent to the view
                                     displayResApi.list = new List<List>();
                                     //Use data from db
                                     foreach (var item in weather.list)
                                     {
+                                        //to populate data to be sent to the view based on the date(Has to be today or in the future)
                                         if (Convert.ToDateTime(item.dt_txt).Date >= DateTime.Now.Date)
                                         {
                                             displayResApi.city = new City();
@@ -118,7 +123,7 @@ namespace KraceGennedy.Controllers
                                         }
 
                                     }
-
+                                    //stops the loop once we get to the city we are interested in
                                     break;
                                 }
                             }
@@ -170,6 +175,7 @@ namespace KraceGennedy.Controllers
 
                 _logger.LogError("Error:" + ex.Message);
             }
+            //return to home page with weather data
             return View(displayResApi);
         }
 
