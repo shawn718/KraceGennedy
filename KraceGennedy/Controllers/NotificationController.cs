@@ -18,11 +18,13 @@ namespace KraceGennedy.Controllers
         public IUserRepositoriesInterface _userRepositoriesInterface { get; }
         public IWeatherRepositoryInterface _weatherRepositoryInterface { get; }
 
-        public NotificationController(IUserRepositoriesInterface UserRepositoriesInterface, IWeatherRepositoryInterface weatherRepositoryInterface)
+        public NotificationController(IUserRepositoriesInterface UserRepositoriesInterface, 
+            IWeatherRepositoryInterface weatherRepositoryInterface)
         {
             this._userRepositoriesInterface = UserRepositoriesInterface;
             this._weatherRepositoryInterface = weatherRepositoryInterface;
         }
+
         // GET: api/<controller>
         [HttpPost]
         [Route("schedule")]

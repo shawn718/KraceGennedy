@@ -22,10 +22,11 @@ namespace KraceGennedy.Data
         public DbSet<WeatherInfo> WeatherInfos { get; set; }
         public DbSet<EmailTracker> EmailTrackers { get; set; }
 
+        //seed table with data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+            
             builder.Entity<EmployeeCity>().HasData(
                     new EmployeeCity { ID = 1, CityName = "Parish of Saint Andrew" },
                     new EmployeeCity { ID = 2, CityName = "Kingston" },
@@ -99,6 +100,11 @@ namespace KraceGennedy.Data
                     new Position { ID = 10, PositionName = "RegularEmployee"},
                     new Position { ID = 11, PositionName = "ITSystemAdministrator"}
                 );
+           
         }
+    }
+
+    internal class Branch
+    {
     }
 }

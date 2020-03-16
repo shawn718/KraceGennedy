@@ -58,7 +58,10 @@ namespace KraceGennedy.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                if (employee.EmployeeId == null)
+                    _context.Add(employee);
+                else
+                    _context.Update(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

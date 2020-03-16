@@ -60,8 +60,6 @@ namespace KraceGennedy.Models
         public string Country { get; set; }
 
         [Column(TypeName = "varchar(25)")]
-        [Required(ErrorMessage = "This field is required.")]
-        [DisplayName("Branch Location")]
         public string Branch { get; set; }
 
     }

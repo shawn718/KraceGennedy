@@ -193,10 +193,7 @@ namespace KraceGennedy.Controllers
                 
             }
 
-            //if above fail
-            //get cities from db
-            //get positions from db
-            //get roles from session
+            //if above fail, get cities from db, get positions from db, get roles from session,
             //populate model so that we dont encounter a null error from the drop down lists
             rvm.city = _userRepositoriesInterface.GetCities();
             rvm.position = _userRepositoriesInterface.GetPositions();
