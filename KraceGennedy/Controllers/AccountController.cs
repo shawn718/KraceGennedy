@@ -37,6 +37,7 @@ namespace KraceGennedy.Controllers
             this.roleManager = roleManager;
         }
 
+      
         [HttpGet]
         public async Task<IActionResult> Register()
         {
@@ -101,6 +102,7 @@ namespace KraceGennedy.Controllers
             
         }
 
+       
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
@@ -206,7 +208,7 @@ namespace KraceGennedy.Controllers
 
                 if (result.Succeeded)
                 {
-                    HttpContext.Session.SetString(ApplicationVariables.SessionVariables.UserEmail, JsonConvert.SerializeObject(lvm.Email));
+                    HttpContext.Session.SetString(ApplicationVariables.SessionVariables.UserEmail, lvm.Email);
                     return RedirectToAction("index", "home");
                 }
 

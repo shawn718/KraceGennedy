@@ -44,6 +44,7 @@ namespace KraceGennedy.Controllers
             try {
                 if (_signInManager.IsSignedIn(User))
                 {
+                    var loggedInUser = HttpContext.Session.GetString(ApplicationVariables.SessionVariables.UserEmail);
                     List<string> listOfCities = new List<string>();
                     List<WeatherApiResponse> weatherApiResponsesList = new List<WeatherApiResponse>();
                     List<Employee> listOfEmployees = _userRepositoriesInterface.GetEmployees();
@@ -88,40 +89,46 @@ namespace KraceGennedy.Controllers
                     //checks if weatherlist is empty
                     if(weatherApiResponsesList != null && weatherApiResponsesList.Count > 0)
                     {
-                        
-                        foreach(var weather in weatherApiResponsesList)
+                        //populate weather data to be displayed for current users city
+                        foreach(var emp in listOfEmployees)
+                        {
+                            if(emp.Email.ToLower().Trim() == loggedInUser.ToLower().Trim()) { 
+                                foreach (var weather in weatherApiResponsesList)
+                                {
+                                    var cityID = cities.Where(x => x.CityName.Trim() == weather.city.name.Trim())
+                                        .FirstOrDefault().ID;
+                                    if (emp.CityID == cityID && emp.Email.ToLower().Trim() == loggedInUser.ToLower().Trim())
+                                        {
+                                            displayResApi.list = new List<List>();
+                                            //Use data from db
+                                            foreach (var item in weather.list)
+                                            {
+                                                if (Convert.ToDateTime(item.dt_txt).Date >= DateTime.Now.Date)
+                                                {
+                                                    displayResApi.city = new City();
+                                                    displayResApi.city.name = weather.city.name;
+                                                    List list = new List();
+                                                    list.dt_txt = item.dt_txt;
+                                                    list.weather = new List<Weather>();
+                                                    Weather weatherForList = new Weather();
+                                                    weatherForList.main = item.weather[0].main;
+                                                    weatherForList.description = item.weather[0].description;
+                                                    list.weather.Add(weatherForList);
+                                                    displayResApi.list.Add(list);
+                                                }
+
+                                            }
+                                            break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+
+                        foreach (var weather in weatherApiResponsesList)
                         {
                             var cityID = cities.Where(x => x.CityName.Trim() == weather.city.name.Trim())
                                 .FirstOrDefault().ID;
-                            
-                            //populate weather data to be displayed for current users city
-                            foreach(var emp in listOfEmployees)
-                            {
-                                if(emp.CityID == cityID)
-                                {
-                                    displayResApi.list = new List<List>();
-                                    //Use data from db
-                                    foreach (var item in weather.list)
-                                    {
-                                        if (Convert.ToDateTime(item.dt_txt).Date >= DateTime.Now.Date)
-                                        {
-                                            displayResApi.city = new City();
-                                            displayResApi.city.name =weather.city.name;
-                                            List list = new List();
-                                            list.dt_txt = item.dt_txt;
-                                            list.weather = new List<Weather>();
-                                            Weather weatherForList = new Weather();
-                                            weatherForList.main = item.weather[0].main;
-                                            weatherForList.description = item.weather[0].description;
-                                            list.weather.Add(weatherForList);
-                                            displayResApi.list.Add(list);
-                                        }
-
-                                    }
-
-                                    break;
-                                }
-                            }
 
                             //Fetch Weather Data from db
                             var resFromDB = _weatherRepositoryInterface.GetWeatherDataByCityID(cityID);
@@ -158,10 +165,7 @@ namespace KraceGennedy.Controllers
                                 }
                                 
                             }
-                        }
-
-                        
-
+                        }                     
                     }
                 }
 
