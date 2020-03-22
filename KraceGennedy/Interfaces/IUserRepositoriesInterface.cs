@@ -15,6 +15,6 @@ namespace KraceGennedy.Interfaces
         public List<Employee> GetEmployees();
         public Schedule GetEmpScheduleByID(string empId, DateTime period);
         public void CreateEmployeeSchedule(Schedule schedule);
-        public bool checkEmailSent(int scheduleId);
+        public bool CheckEmailSent(int scheduleId);
     }
 }

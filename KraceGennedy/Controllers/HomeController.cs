@@ -23,7 +23,7 @@ namespace KraceGennedy.Controllers
 
         public IUserRepositoriesInterface _userRepositoriesInterface;
 
-        public SignInManager<IdentityUser> _signInManager { get; }
+        public SignInManager<IdentityUser> SignInManager { get; }
 
         public HomeController(ILogger<HomeController> logger, IWeatherInterface weatherInterface
             , IWeatherRepositoryInterface weatherRepositoryInterface, IUserRepositoriesInterface UserRepositoriesInterface
@@ -33,7 +33,7 @@ namespace KraceGennedy.Controllers
             _weatherInterface = weatherInterface;
             _weatherRepositoryInterface = weatherRepositoryInterface;
             this._userRepositoriesInterface = UserRepositoriesInterface;
-            _signInManager = signInManager;
+            this.SignInManager = signInManager;
         }
 
         [AllowAnonymous]
@@ -42,7 +42,7 @@ namespace KraceGennedy.Controllers
             var resApi = new WeatherApiResponse();
             var displayResApi = new WeatherApiResponse();
             try {
-                if (_signInManager.IsSignedIn(User))
+                if (SignInManager.IsSignedIn(User))
                 {
                     var loggedInUser = HttpContext.Session.GetString(ApplicationVariables.SessionVariables.UserEmail);
                     List<string> listOfCities = new List<string>();

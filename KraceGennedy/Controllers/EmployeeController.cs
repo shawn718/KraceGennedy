@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KraceGennedy.Data;
 using KraceGennedy.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KraceGennedy.Controllers
 {
@@ -22,6 +23,7 @@ namespace KraceGennedy.Controllers
         // GET: Employee
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Employee.ToListAsync());
         }
 

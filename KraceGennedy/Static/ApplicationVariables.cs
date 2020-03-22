@@ -26,7 +26,7 @@ namespace KraceGennedy.Static
             /// TODO The Employee.
             /// </summary>
             public const string Employee = "Employee";
-            
+
             public const string CEO = "CEO";
         }
 

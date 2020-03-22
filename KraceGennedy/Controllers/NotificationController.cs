@@ -68,7 +68,7 @@ namespace KraceGennedy.Controllers
                                                 _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                             }
                                             //Checks if email was already sent
-                                            var emailSent =_userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                            var emailSent =_userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                             if (!emailSent) { 
                                                 //send email
                                             }
@@ -109,7 +109,7 @@ namespace KraceGennedy.Controllers
                                         _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                     }
                                     //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                     if (!emailSent)
                                     {
                                         //send email
@@ -149,7 +149,7 @@ namespace KraceGennedy.Controllers
                                         _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                     }
                                     //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                     if (!emailSent)
                                     {
                                         //send email
@@ -189,7 +189,7 @@ namespace KraceGennedy.Controllers
                                         _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                     }
                                     //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                     if (!emailSent)
                                     {
                                         //send email
@@ -229,7 +229,7 @@ namespace KraceGennedy.Controllers
                                         _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                     }
                                     //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                     if (!emailSent)
                                     {
                                         //send email
@@ -269,7 +269,7 @@ namespace KraceGennedy.Controllers
                                         _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                     }
                                     //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                     if (!emailSent)
                                     {
                                         //send email
@@ -309,7 +309,7 @@ namespace KraceGennedy.Controllers
                                         _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                     }
                                     //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.checkEmailSent(hasSchedule.ID);
+                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
                                     if (!emailSent)
                                     {
                                         //send email

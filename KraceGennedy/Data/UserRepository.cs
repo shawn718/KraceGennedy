@@ -70,7 +70,7 @@ namespace KraceGennedy.Data
             _context.SaveChanges();
         }
 
-        public bool checkEmailSent(int scheduleId)
+        public bool CheckEmailSent(int scheduleId)
         {
             var res = _context.EmailTrackers
                 .Where(x => x.ScheduleId == scheduleId)

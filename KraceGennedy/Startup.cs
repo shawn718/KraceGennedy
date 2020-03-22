@@ -34,8 +34,6 @@ namespace KraceGennedy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //services.AddDbContextPool<DbContext>(options =>
-            //options.UseSqlserver(Configuration.GetConnectionString("KGConnection")));
 
             //database connection string
             var connStr = Configuration.GetConnectionString("KGConnection");

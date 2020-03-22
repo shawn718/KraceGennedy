@@ -37,7 +37,6 @@ namespace KraceGennedy.Controllers
             this.roleManager = roleManager;
         }
 
-      
         [HttpGet]
         public async Task<IActionResult> Register()
         {
@@ -100,9 +99,7 @@ namespace KraceGennedy.Controllers
                 return RedirectToAction("index", "home");
             }
             
-        }
-
-       
+        } 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
@@ -227,10 +224,10 @@ namespace KraceGennedy.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
         }
-        public class RoleList
-        {
-            public List<Role> roleList { get; set; }
-        }
+        //public class RoleList
+        //{
+        //    public List<Role> roleList { get; set; }
+        //}
 
     }
 }
