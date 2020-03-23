@@ -6,8 +6,7 @@
 
 <div class="text-center" >
     <h1 class="display-4">Welcome</h1>
-    @*<p>Todays sky outlook is : @Model.main</p>
-        <p>Todays Weather is : @Model.description</p>*@
+ 
     @if (signInManager.IsSignedIn(User))
     {
         <table class="table table-striped table-dark">
@@ -74,7 +73,7 @@
         </table>
       }
       else { 
-           <p>Please sign in to view weather data</p>         
+           <p>Please sign in to view weather data or call administrator to create account</p>         
       }
    
 </div>

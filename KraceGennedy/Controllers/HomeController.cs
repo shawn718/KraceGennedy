@@ -21,8 +21,8 @@ namespace KraceGennedy.Controllers
         private readonly IWeatherInterface _weatherInterface;
         private readonly IWeatherRepositoryInterface _weatherRepositoryInterface;
 
-        public IUserRepositoriesInterface _userRepositoriesInterface;
 
+        public IUserRepositoriesInterface _userRepositoriesInterface;
         public SignInManager<IdentityUser> SignInManager { get; }
 
         public HomeController(ILogger<HomeController> logger, IWeatherInterface weatherInterface

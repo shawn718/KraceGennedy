@@ -4,8 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model RegisterViewModel
-
-<h1>Register</h1>
+    <div class="text-center">
+        <h1>Register</h1>
+    </div>
 @{
     if (ViewBag.AddUserSuccess != null)
     {
@@ -23,7 +24,7 @@
         else if (ViewBag.AddUserSuccess == "false")
         {
             <div class="alert alert-danger" role="alert">
-                Unable to add user at this tim please contact the administrator for more assistance.
+                Unable to add user at this time please contact the administrator for more assistance.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -35,6 +36,7 @@
 
 
 <form method="post">
+    <div class="container col-7">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Email">Email Address</label>
@@ -115,6 +117,7 @@
         <input asp-for="ConfirmPassword" type="password" class="form-control">
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-lg btn-primary">Register</button>
+        </div>
 </form>
 
