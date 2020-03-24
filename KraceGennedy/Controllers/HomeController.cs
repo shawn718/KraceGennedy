@@ -95,8 +95,10 @@ namespace KraceGennedy.Controllers
                             if(emp.Email.ToLower().Trim() == loggedInUser.ToLower().Trim()) { 
                                 foreach (var weather in weatherApiResponsesList)
                                 {
-                                    var cityID = cities.Where(x => x.CityName.Trim() == weather.city.name.Trim())
+                                    int cityID = -1;
+                                    cityID = cities.Where(x => x.CityName.Contains(weather.city.name.Trim()))
                                         .FirstOrDefault().ID;
+
                                     if (emp.CityID == cityID && emp.Email.ToLower().Trim() == loggedInUser.ToLower().Trim())
                                         {
                                             displayResApi.list = new List<List>();
@@ -127,7 +129,8 @@ namespace KraceGennedy.Controllers
 
                         foreach (var weather in weatherApiResponsesList)
                         {
-                            var cityID = cities.Where(x => x.CityName.Trim() == weather.city.name.Trim())
+                           int cityID = -1; 
+                            cityID = cities.Where(x => x.CityName.Contains(weather.city.name.Trim()))
                                 .FirstOrDefault().ID;
 
                             //Fetch Weather Data from db
