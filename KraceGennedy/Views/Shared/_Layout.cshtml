@@ -14,7 +14,7 @@
 
 </head>
 <body onload="schedulingandemails()">
-    <header>
+    <header onload="schedulingandemails">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KraceGennedy weather</a>
@@ -68,19 +68,26 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="justify-content-center text-sm-left" >
+        <main role="main" class="justify-content-center text-sm-left">
             @RenderBody()
         </main>
     </div>
-
+    <br/>
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - KraceGennedy
-            -<a class="youtube" href="https://www.facebook.com" target="_blank" rel="me nofollow" title="facebook login">Facebook</a>
-            -<a class="youtube" href="https://www.youtube.com" target="_blank" rel="me nofollow" title="youtube login">Youtube</a>
-            -<a class="twitter" href="https://twitter.com" target="_blank" rel="me nofollow" title="twitter login">Twitter</a>
-            -<a class="instagram" href="https://instagram.com" target="_blank" rel="me nofollow" title="instagram login">Instagram</a>
-
+            &copy; 2020 - KraceGennedy-
+            <a href="https://www.facebook.com" target="_blank">
+                <img src="~/Images/facebook.png" alt="facebook" border="0" width="40" height="40" />
+            </a>
+            <a href="https://www.youtube.com" target="_blank">
+                <img src="~/Images/youtube.png" alt="youtube" border="0" width="40" height="40" />
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <img src="~/Images/twitter.png" alt="twitter" border="0" width="40" height="40" />
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="~/Images/instagram.png" alt="Instagram" border="0" width="40" height="40" />
+            </a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

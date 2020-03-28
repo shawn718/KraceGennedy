@@ -16,6 +16,6 @@ namespace KraceGennedy.Models
         public Schedule Schedule { get; set; }
         public int ScheduleId { get; set; }
         public bool Sent { get; set; }
-        public DateTime dateSent { get; set; }
+        public DateTime DateSent { get; set; }
     }
 }

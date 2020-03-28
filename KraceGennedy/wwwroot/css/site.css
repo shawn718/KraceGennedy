@@ -78,3 +78,8 @@ body {
     position: center;
     background-color: #d2d260;
 }
+.footimages{
+    float: right;
+    border: thin;
+
+}

@@ -4,104 +4,106 @@
 @model WeatherApiResponse;
 @inject SignInManager<IdentityUser> signInManager;
 
-<div class="text-center" >
-    <h1 class="display-4">Welcome</h1>
- 
-    @if (signInManager.IsSignedIn(User))
-    {
-        <table class="table table-striped table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Weather</th>
-                    <th scope="col">City</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int count = 1;
-                    int displayNum = 1;
-                    DateTime previous = new DateTime();
-                    DateTime current = new DateTime();
-                    if (Model.city != null && Model.list != null)
-                    {
-                        foreach (var item in Model.list)
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>The time is @DateTime.Now</p>
+
+        @if (signInManager.IsSignedIn(User))
+        {
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Weather</th>
+                        <th scope="col">City</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int count = 1;
+                        int displayNum = 1;
+                        DateTime previous = new DateTime();
+                        DateTime current = new DateTime();
+                        if (Model.city != null && Model.list != null)
                         {
-                            if (count <= Model.list.Count)
+                            foreach (var item in Model.list)
                             {
-                                if (count == 1)
+                                if (count <= Model.list.Count)
                                 {
-                                    previous = Convert.ToDateTime(item.dt_txt);
-                                    current = Convert.ToDateTime(item.dt_txt);
-                                    if (current.Hour == 6)
+                                    if (count == 1)
                                     {
-                                        <tr>
-                                            <th scope="row">@displayNum</th>
-                                            <td>@item.dt_txt</td>
-                                            <td>@item.weather[0].main: @item.weather[0].description</td>
-                                            <td>@Model.city.name</td>
-                                        </tr>
-                                        displayNum = displayNum + 1;
+                                        previous = Convert.ToDateTime(item.dt_txt);
+                                        current = Convert.ToDateTime(item.dt_txt);
+                                        if (current.Hour == 6)
+                                        {
+                                            <tr>
+                                                <th scope="row">@displayNum</th>
+                                                <td>@item.dt_txt</td>
+                                                <td>@item.weather[0].main: @item.weather[0].description</td>
+                                                <td>@Model.city.name</td>
+                                            </tr>
+                                            displayNum = displayNum + 1;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        current = Convert.ToDateTime(item.dt_txt);
+                                        if (current.Hour == 6)
+                                        {
+                                            <tr>
+                                                <th scope="row">@displayNum</th>
+                                                <td>@item.dt_txt</td>
+                                                <td>@item.weather[0].main: @item.weather[0].description</td>
+                                                <td>@Model.city.name</td>
+                                            </tr>
+                                            displayNum = displayNum + 1;
+                                        }
+
+                                        previous = current;
+
                                     }
                                 }
-                                else
-                                {
-                                    current = Convert.ToDateTime(item.dt_txt);
-                                    if (current.Hour == 6 )
-                                    {
-                                        <tr>
-                                            <th scope="row">@displayNum</th>
-                                            <td>@item.dt_txt</td>
-                                            <td>@item.weather[0].main: @item.weather[0].description</td>
-                                            <td>@Model.city.name</td>
-                                        </tr>
-                                        displayNum = displayNum + 1;
-                                    }
 
-                                    previous = current;
-
-                                }
+                                count = count + 1;
                             }
-
-                            count = count + 1;
                         }
                     }
-                }
 
-            </tbody>
-        </table>
-      }
-      else { 
-           <p>Please sign in to view weather data or call administrator to create account</p>         
-      }
-   
-</div>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Please sign in to view weather data or call administrator to create account</p>
+        }
 
-<script>
+    </div>
+
+<script type="text/javascript" language="javascript">
     function schedulingandemails() {
         var initiator = 0;
         if (document.readyState === 'complete') {
-            // The page is fully loaded
-           // while (initiator == 0) {
-                //var d = new Date();
-                //if (d.getHours >= 22) {
-                //    $.ajax({
-                //        type: "post",
-                //        url: "/api/notification/schedule",
-                //        success: function (response) {
-                //            console.log("success");
+            <P>The page is fully loaded </P>
+            while (initiator == 0) {
+                var d = new Date();
+                if (d.getHours >= 22) {
+                    $.ajax({
+                        type: "post",
+                        url: "/api/notification/schedule",
+                        success: function (response) {
+                            console.log("success");
 
-                //        },
-                //        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //            console.log(errorThrown);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown);
 
-                //        },
-                //        datatype: "application/json"
-                //    });
-                //}
+                        },
+                        datatype: "application/json"
+                    });
+                }
 
-            //}
+            }
         } else {
             schedulingandemails()
         }
