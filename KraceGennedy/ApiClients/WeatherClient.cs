@@ -40,7 +40,7 @@ namespace KraceGennedy.ApiClients
         }
         public async Task<WeatherApiResponse> GetWeatherAsync(string q)
         {
-            //Weather weatherRes = new Weather();
+
             try
             {
                 var finalResult = new WeatherApiResponse();
@@ -53,13 +53,7 @@ namespace KraceGennedy.ApiClients
                     var results = res.Content.ReadAsStringAsync().Result;
                     finalResult = JsonConvert.DeserializeObject<WeatherApiResponse>(results, jsonOptions);
 
-                }
-
-                //foreach(var wRes in finalResult.weather)
-                //{
-                //    weatherRes = wRes;
-                //}
-                
+                }             
                 
                 return finalResult;
             }

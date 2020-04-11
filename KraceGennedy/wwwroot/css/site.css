@@ -83,3 +83,9 @@ body {
     border: thin;
 
 }
+
+.location{
+    float:left;
+    font-size:medium;
+    color: brown;
+}
