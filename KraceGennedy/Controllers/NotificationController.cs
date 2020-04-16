@@ -39,293 +39,222 @@ namespace KraceGennedy.Controllers
                     var currentDate = DateTime.Now.Date;
                     //Figure out which day it is
                     var dayOfWeek = DateTime.Now.DayOfWeek.ToString();
-                    //Carry out the respective action based on the day
-                    switch (dayOfWeek)
+                   
+                    if (dayOfWeek == "Sunday")
                     {
-                        case "Sunday":
-                                    //Initialize counter
-                                    int numOfDsays = 6;
-                                    //loop through each employees
-                                    foreach(var emp in employees) { 
-                                        //start schedule check loop
-                                        for(int i = 1; i <= numOfDsays;) {
-                                            //check if employees hrs were already scheduled for this day
-                                            var hasSchedule = _userRepositoriesInterface.
-                                               GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                            //if user has no scheduled hrs for selected day generate schedule
-                                            if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != "" 
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                            {
-                                                Schedule schedule = new Schedule();
-                                                schedule.Day = currentDate.ToString();
-                                                schedule.EmployeeID = emp.EmployeeId;
-                                                //Aquire weather data for users city for currentdate
-                                                var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                        emp.CityID, currentDate);
-                                                //determine schedule
-                                                schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-                                                //store schedule
-                                                _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                            }
-                                            //Checks if email was already sent
-                                            var emailSent =_userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                            if (!emailSent) { 
-                                                //send email
-                                            }
-                                            //Increment for loop
-                                            i = i + 1;
-                                            //move on to the next day
-                                            currentDate = currentDate.AddDays(1);
-                                        }
-                                    }
-                                    
-                                    break;
-                        case "Monday":
-                            //Initialize counter
-                             numOfDsays = 5;
-                            //loop through each employees
-                            foreach (var emp in employees)
+                        int numOfDays = 6;
+                        //loop through each employees
+                        foreach (var emp in employees)
+                        {
+                            //start schedule check loop
+                            for (int i = 1; i <= numOfDays;)
                             {
-                                //start schedule check loop
-                                for (int i = 1; i <= numOfDsays;)
+                                //check if employees hrs were already scheduled for this day
+                                var hasSchedule = _userRepositoriesInterface.
+                                   GetEmpScheduleByID(emp.EmployeeId, currentDate);
+                                //if user has no scheduled hrs for selected day generate schedule
+                                if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
+                                    && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
                                 {
-                                    //check if employees hrs were already scheduled for this day
-                                    var hasSchedule = _userRepositoriesInterface.
-                                       GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                    //if user has no scheduled hrs for selected day generate schedule
-                                    if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                    {
-                                        Schedule schedule = new Schedule();
-                                        schedule.Day = currentDate.ToString();
-                                        schedule.EmployeeID = emp.EmployeeId;
-                                        //Aquire weather data for users city for currentdate
-                                        var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                emp.CityID, currentDate);
-                                        //determine schedule
-                                        schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-
-                                        //store schedule
-                                        _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                    }
-                                    //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                    if (!emailSent)
-                                    {
-                                        //send email
-                                    }
-                                    //Increment for loop
-                                    i = i + 1;
-                                    //move on to the next day
-                                    currentDate = currentDate.AddDays(1);
+                                    Schedule schedule = new Schedule();
+                                    schedule.Day = currentDate.ToString();
+                                    schedule.EmployeeID = emp.EmployeeId;
+                                    //Aquire weather data for users city for currentdate
+                                    var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
+                                            emp.CityID, currentDate);
+                                    //determine schedule
+                                    schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
+                                    //store schedule
+                                    _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
                                 }
-                            }
-
-                            break;
-                        case "Tuesday":
-                            //Initialize counter
-                            numOfDsays = 4;
-                            //loop through each employees
-                            foreach (var emp in employees)
-                            {
-                                //start schedule check loop
-                                for (int i = 1; i <= numOfDsays;)
+                                //Checks if email was already sent
+                                var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
+                                if (!emailSent)
                                 {
-                                    //check if employees hrs were already scheduled for this day
-                                    var hasSchedule = _userRepositoriesInterface.
-                                       GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                    //if user has no scheduled hrs for selected day generate schedule
-                                    if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                    {
-                                        Schedule schedule = new Schedule();
-                                        schedule.Day = currentDate.ToString();
-                                        schedule.EmployeeID = emp.EmployeeId;
-                                        //Aquire weather data for users city for currentdate
-                                        var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                emp.CityID, currentDate);
-                                        //determine schedule
-                                        schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-                                        _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                    }
-                                    //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                    if (!emailSent)
-                                    {
-                                        //send email
-                                    }
-                                    //Increment for loop
-                                    i = i + 1;
-                                    //move on to the next day
-                                    currentDate = currentDate.AddDays(1);
+                                    //send email
                                 }
+                                //Increment for loop
+                                i = i + 1;
+                                //move on to the next day
+                                currentDate = currentDate.AddDays(1);
                             }
-
-                            break;
-                        case "Wednesday":
-                            //Initialize counter
-                            numOfDsays = 3;
-                            //loop through each employees
-                            foreach (var emp in employees)
-                            {
-                                //start schedule check loop
-                                for (int i = 1; i <= numOfDsays;)
-                                {
-                                    //check if employees hrs were already scheduled for this day
-                                    var hasSchedule = _userRepositoriesInterface.
-                                       GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                    //if user has no scheduled hrs for selected day generate schedule
-                                    if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                    {
-                                        Schedule schedule = new Schedule();
-                                        schedule.Day = currentDate.ToString();
-                                        schedule.EmployeeID = emp.EmployeeId;
-                                        //Aquire weather data for users city for currentdate
-                                        var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                emp.CityID, currentDate);
-                                        //determine schedule
-                                        schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-                                        _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                    }
-                                    //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                    if (!emailSent)
-                                    {
-                                        //send email
-                                    }
-                                    //Increment for loop
-                                    i = i + 1;
-                                    //move on to the next day
-                                    currentDate = currentDate.AddDays(1);
-                                }
-                            }
-
-                            break;
-                        case "Thursday":
-                            //Initialize counter
-                            numOfDsays = 2;
-                            //loop through each employees
-                            foreach (var emp in employees)
-                            {
-                                //start schedule check loop
-                                for (int i = 1; i <= numOfDsays;)
-                                {
-                                    //check if employees hrs were already scheduled for this day
-                                    var hasSchedule = _userRepositoriesInterface.
-                                       GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                    //if user has no scheduled hrs for selected day generate schedule
-                                    if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                    {
-                                        Schedule schedule = new Schedule();
-                                        schedule.Day = currentDate.ToString();
-                                        schedule.EmployeeID = emp.EmployeeId;
-                                        //Aquire weather data for users city for currentdate
-                                        var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                emp.CityID, currentDate);
-                                        //determine schedule
-                                        schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-                                        _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                    }
-                                    //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                    if (!emailSent)
-                                    {
-                                        //send email
-                                    }
-                                    //Increment for loop
-                                    i = i + 1;
-                                    //move on to the next day
-                                    currentDate = currentDate.AddDays(1);
-                                }
-                            }
-
-                            break;
-                        case "Friday":
-                            //Initialize counter
-                            numOfDsays = 1;
-                            //loop through each employees
-                            foreach (var emp in employees)
-                            {
-                                //start schedule check loop
-                                for (int i = 1; i <= numOfDsays;)
-                                {
-                                    //check if employees hrs were already scheduled for this day
-                                    var hasSchedule = _userRepositoriesInterface.
-                                       GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                    //if user has no scheduled hrs for selected day generate schedule
-                                    if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                    {
-                                        Schedule schedule = new Schedule();
-                                        schedule.Day = currentDate.ToString();
-                                        schedule.EmployeeID = emp.EmployeeId;
-                                        //Aquire weather data for users city for currentdate
-                                        var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                emp.CityID, currentDate);
-                                        //determine schedule
-                                        schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-                                        _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                    }
-                                    //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                    if (!emailSent)
-                                    {
-                                        //send email
-                                    }
-                                    //Increment for loop
-                                    i = i + 1;
-                                    //move on to the next day
-                                    currentDate = currentDate.AddDays(1);
-                                }
-                            }
-
-                            break;
-                        case "Saturday":
-                            //Initialize counter
-                            numOfDsays = 1;
-                            //loop through each employees
-                            foreach (var emp in employees)
-                            {
-                                //start schedule check loop
-                                for (int i = 1; i <= numOfDsays;)
-                                {
-                                    //check if employees hrs were already scheduled for this day
-                                    var hasSchedule = _userRepositoriesInterface.
-                                       GetEmpScheduleByID(emp.EmployeeId, currentDate);
-                                    //if user has no scheduled hrs for selected day generate schedule
-                                    if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
-                                                && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
-                                    {
-                                        Schedule schedule = new Schedule();
-                                        schedule.Day = currentDate.ToString();
-                                        schedule.EmployeeID = emp.EmployeeId;
-                                        //Aquire weather data for users city for currentdate
-                                        var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
-                                                emp.CityID, currentDate);
-                                        //determine schedule
-                                        schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
-                                        _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
-                                    }
-                                    //Checks if email was already sent
-                                    var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
-                                    if (!emailSent)
-                                    {
-                                        //send email
-                                    }
-                                    //Increment for loop
-                                    i = i + 1;
-                                    //move on to the next day
-                                    currentDate = currentDate.AddDays(1);
-                                }
-                            }
-
-                            break;
-                        default:
-                            break;
-
+                        }
                     }
+                    else if (dayOfWeek == "Monday")
+                    {
+                        //Initialize counter
+                        int numOfDays = 5;
+                        //loop through each employees
+                        foreach (var emp in employees)
+                        {
+                            //start schedule check loop
+                            for (int i = 1; i <= numOfDays;)
+                            {
+                                //check if employees hrs were already scheduled for this day
+                                var hasSchedule = _userRepositoriesInterface.
+                                   GetEmpScheduleByID(emp.EmployeeId, currentDate);
+                                //if user has no scheduled hrs for selected day generate schedule
+                                if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
+                                            && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
+                                {
+                                    Schedule schedule = new Schedule();
+                                    schedule.Day = currentDate.ToString();
+                                    schedule.EmployeeID = emp.EmployeeId;
+                                    //Aquire weather data for users city for currentdate
+                                    var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
+                                            emp.CityID, currentDate);
+                                    //determine schedule
+                                    schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
+
+                                    //store schedule
+                                    _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
+                                }
+                                //Checks if email was already sent
+                                var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
+                                if (!emailSent)
+                                {
+                                    //send email
+                                }
+                                //Increment for loop
+                                i = i + 1;
+                                //move on to the next day
+                                currentDate = currentDate.AddDays(1);
+                            }
+                        }
+                    }
+                    else if (dayOfWeek == "Tuesday")
+                    {
+                        //Initialize counter
+                        int numOfDays = 4;
+                        //loop through each employees
+                        foreach (var emp in employees)
+                        {
+                            //start schedule check loop
+                            for (int i = 1; i <= numOfDays;)
+                            {
+                                //check if employees hrs were already scheduled for this day
+                                var hasSchedule = _userRepositoriesInterface.
+                                   GetEmpScheduleByID(emp.EmployeeId, currentDate);
+                                //if user has no scheduled hrs for selected day generate schedule
+                                if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
+                                            && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
+                                {
+                                    Schedule schedule = new Schedule();
+                                    schedule.Day = currentDate.ToString();
+                                    schedule.EmployeeID = emp.EmployeeId;
+                                    //Aquire weather data for users city for currentdate
+                                    var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
+                                            emp.CityID, currentDate);
+                                    //determine schedule
+                                    schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
+
+                                    //store schedule
+                                    _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
+                                }
+                                //Checks if email was already sent
+                                var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
+                                if (!emailSent)
+                                {
+                                    //send email
+                                }
+                                //Increment for loop
+                                i = i + 1;
+                                //move on to the next day
+                                currentDate = currentDate.AddDays(1);
+                            }
+                        }
+                    }
+                    else if (dayOfWeek == "Wednesday")
+                    {
+                        //Initialize counter
+                        int numOfDays = 3;
+                        //loop through each employees
+                        foreach (var emp in employees)
+                        {
+                            //start schedule check loop
+                            for (int i = 1; i <= numOfDays;)
+                            {
+                                //check if employees hrs were already scheduled for this day
+                                var hasSchedule = _userRepositoriesInterface.
+                                   GetEmpScheduleByID(emp.EmployeeId, currentDate);
+                                //if user has no scheduled hrs for selected day generate schedule
+                                if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
+                                            && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
+                                {
+                                    Schedule schedule = new Schedule();
+                                    schedule.Day = currentDate.ToString();
+                                    schedule.EmployeeID = emp.EmployeeId;
+                                    //Aquire weather data for users city for currentdate
+                                    var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
+                                            emp.CityID, currentDate);
+                                    //determine schedule
+                                    schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
+
+                                    //store schedule
+                                    _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
+                                }
+                                //Checks if email was already sent
+                                var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
+                                if (!emailSent)
+                                {
+                                    //send email
+                                }
+                                //Increment for loop
+                                i = i + 1;
+                                //move on to the next day
+                                currentDate = currentDate.AddDays(1);
+                            }
+                        }
+                    }
+                    else if (dayOfWeek == "Thursday")
+                    {
+                        //Initialize counter
+                        int numOfDsays = 2;
+                        //loop through each employees
+                        foreach (var emp in employees)
+                        {
+                            //start schedule check loop
+                            for (int i = 1; i <= numOfDsays;)
+                            {
+                                //check if employees hrs were already scheduled for this day
+                                var hasSchedule = _userRepositoriesInterface.
+                                   GetEmpScheduleByID(emp.EmployeeId, currentDate);
+                                //if user has no scheduled hrs for selected day generate schedule
+                                if (hasSchedule.EmployeeID != null && hasSchedule.EmployeeID != ""
+                                            && dayOfWeek != "Sunday" && dayOfWeek != "Saturday")
+                                {
+                                    Schedule schedule = new Schedule();
+                                    schedule.Day = currentDate.ToString();
+                                    schedule.EmployeeID = emp.EmployeeId;
+                                    //Aquire weather data for users city for currentdate
+                                    var empWeather = _weatherRepositoryInterface.GetWeatherDataByCityIDAndDate(
+                                            emp.CityID, currentDate);
+                                    //determine schedule
+                                    schedule.Day = determineSchedule(empWeather.WeatherDesc, emp.Position.PositionName, emp.FullName);
+
+                                    //store schedule
+                                    _userRepositoriesInterface.CreateEmployeeSchedule(schedule);
+                                }
+                                //Checks if email was already sent
+                                var emailSent = _userRepositoriesInterface.CheckEmailSent(hasSchedule.ID);
+                                if (!emailSent)
+                                {
+                                    //send email
+                                }
+                                //Increment for loop
+                                i = i + 1;
+                                //move on to the next day
+                                currentDate = currentDate.AddDays(1);
+                            }
+                        }
+                    }
+                    else if (dayOfWeek == "Friday" || dayOfWeek == "Saturday")
+                    {
+                       
+                        currentDate = currentDate.AddDays(1);
+                    }
+
+                    
                 }
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model WeatherApiResponse;
 @inject SignInManager<IdentityUser> signInManager;
@@ -7,11 +8,11 @@
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
         <p>@DateTime.Now.DayOfWeek, @DateTime.Now.ToShortDateString()</p>
-        
+
         @if (signInManager.IsSignedIn(User))
         {
             <div class="location">
-             Your 5 days weather report for <h4>@Model.city.name, Jamaica</h4>
+             Your weather report for <h4>@Model.city.name, Jamaica</h4>
             </div>
             <table class="table table-striped table-dark">
                 <thead>
@@ -24,22 +25,22 @@
                 </thead>
                 <tbody>
                     @{
-                        int count = 1;
+                        int count = 32;
                         int displayNum = 1;
                         DateTime previous = new DateTime();
                         DateTime current = new DateTime();
 
                         // set instance of time and increment date by one day
                         DateTime now = DateTime.Today;
-                        now = now.AddDays(1);
+                        //now = now.AddDays(1);
 
                         if (Model.city != null && Model.list != null)
                         {
                             foreach (var item in Model.list)
                             {
-                                if (count <= Model.list.Count)
+                                if (count < Model.list.Count)
                                 {
-                                    if (count == 1)
+                                    if (count == 32)
                                     {
                                         previous = Convert.ToDateTime(item.dt_txt);
                                         current = Convert.ToDateTime(item.dt_txt);
@@ -48,12 +49,12 @@
                                         {
                                             <tr>
                                                 <th scope="row">@now.ToString("dddd")</th>
-                                                <td>@item.dt_txt</td>
+                                                <td>@DateTime.Now.ToShortDateString()</td>
                                                 <td>@item.weather[0].main: @item.weather[0].description</td>
                                                 <td>@Model.city.name</td>
                                             </tr>
                                             displayNum = displayNum + 1;
-                                            now = now.AddDays(1);
+                                            //now = now.AddDays(1);
                                         }
                                     }
                                     else
@@ -63,12 +64,12 @@
                                         {
                                             <tr>
                                                 <th scope="row">@now.ToString("dddd")</th>
-                                                <td>@item.dt_txt</td>
+                                                <td>@DateTime.Now.ToShortDateString()</td>
                                                 <td>@item.weather[0].main: @item.weather[0].description</td>
                                                 <td>@Model.city.name</td>
                                             </tr>
                                             displayNum = displayNum + 1;
-                                            now = now.AddDays(1);
+                                            //now = now.AddDays(1);
                                         }
 
                                         previous = current;
